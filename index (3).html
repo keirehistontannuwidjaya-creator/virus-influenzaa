@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virus Influenza – Pengalaman Belajar Biologi Interaktif</title>
+<meta name="description" content="Pelajari struktur, jenis, penyebaran, replikasi, gejala, dan pencegahan virus influenza secara interaktif untuk siswa kelas X.">
+<style>
+:root{--navy:#10182B;--mid:#172B4D;--blue:#3678F6;--cyan:#65D6E8;--soft:#F4F7FC;--ink:#1a2540;--mut:#566480;--amber:#F5A524;--line:#d5e2f7;--e:cubic-bezier(.22,.8,.24,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{font-family:"Inter","Manrope","Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;background:var(--soft);color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{color:var(--navy);line-height:1.1;letter-spacing:-.025em}
+h2{font-size:clamp(2rem,4.6vw,3.2rem);font-weight:800;margin-bottom:.7rem}
+h3{font-size:1.15rem;font-weight:700;margin-bottom:.35rem}
+p{color:var(--mut)}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,92%);margin:auto;position:relative;z-index:1}
+section{position:relative;padding:clamp(4.5rem,9vw,7.5rem) 0;overflow:hidden}
+.alt{background:linear-gradient(180deg,var(--soft),#e8effb 16%,#e8effb 84%,var(--soft))}
+.tag{display:inline-block;font-weight:700;font-size:.85rem;color:var(--blue);background:#fff;border:1px solid var(--line);padding:.25rem .9rem;border-radius:99px;margin-bottom:1rem}
+.head{max-width:740px;margin-bottom:2.8rem}
+.lead{font-size:1.07rem;max-width:62ch}
+.card{background:#fff;border-radius:22px;padding:1.5rem;box-shadow:0 1px 2px rgba(16,24,43,.05),0 14px 40px -18px rgba(16,24,43,.2);transition:transform .5s var(--e),box-shadow .5s var(--e)}
+.hv:hover{transform:translateY(-6px);box-shadow:0 2px 4px rgba(16,24,43,.05),0 26px 50px -20px rgba(54,120,246,.38)}
+.grid{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.deco{position:absolute;border-radius:50%;pointer-events:none;will-change:transform;z-index:0}
+.ico{width:46px;height:46px;border-radius:14px;background:#eaf3ff;display:grid;place-items:center;margin-bottom:1rem}
+.ico svg{width:26px;height:26px;fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:.2rem .75rem;border-radius:99px;background:#eaf3ff;color:var(--blue);margin-bottom:.7rem}
+.btn{display:inline-flex;align-items:center;background:linear-gradient(135deg,var(--blue),#5a95ff);color:#fff;text-decoration:none;font-weight:700;padding:.95rem 1.8rem;border-radius:99px;box-shadow:0 12px 30px -10px rgba(54,120,246,.85);transition:transform .4s var(--e),box-shadow .4s}
+.btn:hover{transform:translateY(-3px)}
+
+/* animation system */
+.rv{opacity:0;transition:opacity 1s var(--e),transform 1s var(--e),clip-path 1.3s var(--e);transition-delay:var(--d,0s)}
+.rv[data-r=up]{transform:translateY(30px)}
+.rv[data-r=left]{transform:translateX(-46px)}
+.rv[data-r=right]{transform:translateX(46px)}
+.rv[data-r=clip]{opacity:1;clip-path:inset(0 100% 0 0 round 22px)}
+.rv.in{opacity:1;transform:none}
+.rv[data-r=clip].in{clip-path:inset(0 0 0 0 round 22px)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--e);transition-delay:var(--d,0s)}
+.in .draw,.draw.in{stroke-dashoffset:0}
+.pp{opacity:0;transform:scale(.3);transform-box:fill-box;transform-origin:center;transition:opacity .8s var(--e),transform .8s var(--e);transition-delay:var(--d,0s)}
+.in .pp{opacity:1;transform:none}
+
+/* nav */
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:200}
+nav{position:fixed;top:0;left:0;right:0;z-index:150;transition:background .4s,box-shadow .4s,backdrop-filter .4s}
+nav.solid{background:rgba(244,247,252,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(16,24,43,.08)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-weight:800;text-decoration:none;color:#fff;display:flex;gap:.55rem;align-items:center;transition:color .4s}
+.logo i{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--cyan),var(--blue))}
+.links{display:flex;gap:.15rem;list-style:none}
+.links a{display:block;text-decoration:none;font-size:.85rem;font-weight:600;color:#c9d6f2;padding:.4rem .7rem;border-radius:99px;transition:.3s}
+.links a:hover{color:#fff}
+.links a.on{background:var(--blue);color:#fff}
+nav.solid .logo{color:var(--navy)}
+nav.solid .links a{color:var(--mut)}nav.solid .links a:hover{color:var(--navy)}nav.solid .links a.on{color:#fff}
+#burger{display:none;width:44px;height:44px;border-radius:12px;flex-direction:column;gap:5px;align-items:center;justify-content:center}
+#burger span{width:22px;height:2px;background:#fff;transition:.3s}
+nav.solid #burger span{background:var(--navy)}
+#burger[aria-expanded=true] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#burger[aria-expanded=true] span:nth-child(2){opacity:0}
+#burger[aria-expanded=true] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:1020px){
+#burger{display:flex}
+.links{position:absolute;top:66px;left:0;right:0;flex-direction:column;background:#fff;padding:.6rem 4%;box-shadow:0 20px 30px -20px rgba(16,24,43,.35);clip-path:inset(0 0 100% 0);opacity:0;visibility:hidden;transition:.45s var(--e)}
+.links.open{clip-path:inset(0);opacity:1;visibility:visible}
+.links a,nav.solid .links a{color:var(--ink);padding:.8rem 1rem;font-size:1rem}
+.links a.on,nav.solid .links a.on{color:#fff}}
+
+/* hero */
+#home{min-height:100svh;display:flex;align-items:center;padding:7rem 0 6rem;color:#fff;background:radial-gradient(900px 620px at 78% 32%,#1f4a9c 0,transparent 62%),radial-gradient(700px 500px at 5% 90%,#172B4D 0,transparent 70%),var(--navy)}
+#home h1{color:#fff;font-size:clamp(3rem,9vw,6.6rem);font-weight:800;letter-spacing:-.045em;line-height:.98}
+#home p{color:#b9c8e8}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+.hero-txt>*{opacity:0;animation:up 1.1s var(--e) forwards}
+.hero-txt>:nth-child(2){animation-delay:.12s}.hero-txt>:nth-child(3){animation-delay:.24s}.hero-txt>:nth-child(4){animation-delay:.36s}.hero-txt>:nth-child(5){animation-delay:.48s}
+.sub{font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:600;color:#fff!important;margin:1.4rem 0 .8rem}
+.hero-art{animation:reveal 1.7s .3s var(--e) both}
+.hero-art svg{width:100%;max-width:520px;margin:auto;display:block;animation:float 10s ease-in-out infinite;filter:drop-shadow(0 30px 60px rgba(54,120,246,.5))}
+.part{position:absolute;border-radius:50%;background:rgba(101,214,232,.55);animation:rise var(--t) linear infinite;animation-delay:var(--dl);left:var(--x);bottom:-20px;width:var(--s);height:var(--s);pointer-events:none}
+.scroll-hint{position:absolute;bottom:1.8rem;left:50%;width:24px;height:40px;border:2px solid #ffffff55;border-radius:14px;transform:translateX(-50%)}
+.scroll-hint::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:4px;background:var(--cyan);animation:wheel 2.2s ease-in-out infinite}
+@keyframes up{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes reveal{from{opacity:0;clip-path:circle(0% at 50% 50%)}to{opacity:1;clip-path:circle(75% at 50% 50%)}}
+@keyframes float{50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes rise{0%{transform:translateY(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-105vh) translateX(30px);opacity:0}}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.hero-art{order:-1;max-width:280px;margin:0 auto}}
+
+/* pengertian */
+.edit{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:start}
+.big{font-size:clamp(1.25rem,2.4vw,1.6rem);color:var(--navy);font-weight:600;line-height:1.5;letter-spacing:-.01em;margin-bottom:1.2rem}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.vs .card{padding:1.2rem}.vs .card:first-child{border-top:4px solid var(--blue)}.vs .card:last-child{border-top:4px solid var(--cyan)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat b{display:block;font-size:2.3rem;font-weight:800;color:var(--blue);line-height:1.1;letter-spacing:-.03em}
+.stat span{font-size:.88rem;color:var(--mut);display:block;line-height:1.4;margin-top:.3rem}
+.fam{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.fam span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:.25rem .8rem;font-size:.85rem;font-weight:600;color:var(--mid)}
+@media(max-width:860px){.edit,.vs{grid-template-columns:1fr}}
+
+/* jenis */
+.type svg{width:100%;height:120px;margin-bottom:.8rem}
+.type .more{max-height:0;overflow:hidden;transition:max-height .6s var(--e)}
+.type .more ul{margin:.8rem 0 0 1.1rem;font-size:.92rem;color:var(--mut)}
+.tg{margin-top:.9rem;font-weight:700;color:var(--blue);font-size:.9rem;display:flex;gap:.4rem;align-items:center}
+.tg::after{content:"+";font-size:1.2rem;transition:transform .4s var(--e)}
+.tg[aria-expanded=true]::after{transform:rotate(45deg)}
+
+/* struktur */
+.sbox{position:relative;background:radial-gradient(ellipse at 50% 50%,#fff,#e8effb);border-radius:28px;box-shadow:inset 0 0 0 1px var(--line);padding:.5rem;margin-bottom:1.4rem}
+.sbox svg{width:100%;display:block}
+.hs{cursor:pointer;outline:none}
+.hs .dot{fill:var(--navy);transition:fill .3s}
+.hs.on .dot{fill:var(--blue)}
+.hs:focus-visible .dot{stroke:var(--blue);stroke-width:4}
+.hs text{font-size:23px;font-weight:600;fill:var(--navy)}
+.hs.on text{fill:var(--blue)}
+.hs .ln{stroke:var(--navy);stroke-width:1.6;fill:none;opacity:.55;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.4s var(--e);transition-delay:var(--d,0s)}
+.in .hs .ln{stroke-dashoffset:0}
+.hs.on .ln{stroke:var(--blue);opacity:1}
+.hs .pulse{fill:none;stroke:var(--blue);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 2.6s infinite}
+.hs.on .pulse{animation:none;opacity:0}
+@keyframes ping{0%{transform:scale(.8);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+.stools{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:1rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem}
+.tab{padding:.5rem 1rem;border-radius:99px;background:#fff;font-weight:600;font-size:.88rem;border:1px solid var(--line);transition:.3s}
+.tab[aria-selected=true],.tab[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.info{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+.info.swap{animation:fade .6s var(--e)}
+.num{width:52px;height:52px;border-radius:16px;background:var(--navy);color:#fff;font-weight:800;font-size:1.3rem;display:grid;place-items:center}
+
+/* ciri */
+.feat svg{width:30px;height:30px;fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.feat .ico{width:58px;height:58px;border-radius:18px}
+.feat .bar{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0;transition:width 1.4s var(--e);transition-delay:calc(var(--d,0s) + .3s);margin-top:1rem}
+.feat.in .bar{width:56%}
+
+/* penyebaran */
+.tsvg{padding:1rem}
+.tsvg svg{width:100%;display:block}
+.tsvg text{font-size:15px;font-weight:600;fill:var(--mid)}
+.three{margin-top:1.2rem}
+
+/* replikasi */
+.rprog{position:sticky;top:70px;z-index:20;background:rgba(244,247,252,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:18px;padding:.8rem 1.1rem;margin-bottom:1.6rem;box-shadow:0 8px 24px -14px rgba(16,24,43,.3)}
+.rtrack{height:5px;background:#dbe6f8;border-radius:5px;overflow:hidden}
+.rtrack i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .7s var(--e)}
+.rdots{display:flex;justify-content:space-between;margin-top:.55rem;gap:.2rem}
+.rd{font-size:.78rem;font-weight:700;color:var(--mut);padding:.2rem .5rem;border-radius:99px;transition:.4s var(--e)}
+.rd.on{background:var(--blue);color:#fff}.rd.done{color:var(--blue)}
+.stg{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:center;margin-bottom:1.6rem}
+.stg:nth-child(even) .sc{order:2}
+.sc{padding:.8rem;background:linear-gradient(180deg,#fff,#eef4fe)}
+.sc svg{width:100%;display:block;border-radius:14px}
+.sc text{font-size:10.5px;font-weight:600;fill:#243257}
+.stg .txt .chip{font-size:.85rem}
+@media(max-width:820px){.stg{grid-template-columns:1fr}.stg:nth-child(even) .sc{order:0}.rd{font-size:0;padding:.35rem}.rd::before{content:attr(data-n);font-size:.78rem}}
+
+/* gejala, pencegahan */
+.sym .ico{margin-bottom:.8rem}
+.note{margin-top:1.6rem;padding:1.1rem 1.4rem;border-radius:18px;background:#fff;border:1px dashed #a9c2ec;color:var(--mid)}
+
+/* quiz */
+.quiz{max-width:780px;margin:auto;padding:2rem}
+.qtop{display:flex;justify-content:space-between;color:var(--mut);font-weight:600;font-size:.9rem;margin-bottom:.6rem}
+.pbar{height:6px;background:#e1ebfb;border-radius:6px;overflow:hidden}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s var(--e)}
+.q{font-size:1.35rem;font-weight:700;color:var(--navy);margin:1.3rem 0;line-height:1.35}
+.opts{display:grid;gap:.7rem}
+.opt{text-align:left;padding:1rem 1.2rem;border-radius:16px;border:1.5px solid var(--line);background:#fff;transition:.3s var(--e);font-weight:500}
+.opt:hover:not(:disabled){border-color:var(--blue);transform:translateX(4px)}
+.opt.ok{background:#e4f8ee;border-color:#2fb27a}.opt.no{background:#fdeaea;border-color:#e25a5a}
+.fb{min-height:3.5rem;margin-top:1rem;font-size:.95rem}
+.res{text-align:center;padding:1rem 0}
+.res b{font-size:4.6rem;color:var(--blue);display:block;line-height:1;letter-spacing:-.04em}
+
+/* penutup & footer */
+#penutup{background:radial-gradient(800px 500px at 50% 0,#1f4a9c 0,transparent 65%),var(--navy);text-align:center;color:#fff;padding:clamp(6rem,12vw,10rem) 0}
+#penutup h2{color:#fff;font-size:clamp(2.4rem,7vw,5rem);letter-spacing:-.04em;max-width:14ch;margin:0 auto 1.2rem}
+#penutup p{color:#b9c8e8;max-width:56ch;margin:0 auto 2rem}
+footer{background:#0b1120;color:#a9b8d8;padding:4rem 0 2rem;font-size:.92rem}
+footer h3{color:#fff;margin-bottom:.6rem}footer p{color:#a9b8d8}
+.fg{display:grid;grid-template-columns:1.2fr .8fr 1.2fr;gap:2.4rem}
+.fg ul{list-style:none;display:grid;gap:.4rem}
+.fg a{text-decoration:none;transition:color .3s}.fg a:hover{color:var(--cyan)}
+.fg small{display:block;line-height:1.55}
+.cr{border-top:1px solid #ffffff1f;margin-top:2.4rem;padding-top:1.2rem;font-size:.85rem}
+@media(max-width:820px){.fg{grid-template-columns:1fr}}
+#top{position:fixed;right:1.2rem;bottom:1.2rem;width:48px;height:48px;border-radius:50%;background:var(--navy);display:grid;place-items:center;box-shadow:0 12px 24px -8px rgba(16,24,43,.55);opacity:0;transform:translateY(16px);pointer-events:none;transition:.5s var(--e);z-index:120}
+#top.show{opacity:1;transform:none;pointer-events:auto}
+#top svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*::before,*::after{animation:none!important;transition:none!important}
+.rv,.hero-txt>*,.pp{opacity:1!important;transform:none!important;clip-path:none!important}
+.draw,.hs .ln{stroke-dashoffset:0!important}
+.part{display:none}}
+</style>
+</head>
+<body>
+<div id="bar" aria-hidden="true"></div>
+<nav id="nav" aria-label="Navigasi utama"><div class="wrap nav-in">
+<a class="logo" href="#home"><i></i>Influenza</a>
+<button id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+<ul class="links" id="links">
+<li><a href="#pengertian">Pengertian</a></li><li><a href="#jenis">Jenis</a></li><li><a href="#struktur">Struktur</a></li><li><a href="#ciri">Ciri</a></li><li><a href="#penyebaran">Penyebaran</a></li><li><a href="#replikasi">Replikasi</a></li><li><a href="#gejala">Gejala</a></li><li><a href="#pencegahan">Pencegahan</a></li><li><a href="#kuis">Kuis</a></li>
+</ul></div></nav>
+
+<main>
+<section id="home" data-nav>
+<div id="parts" aria-hidden="true"></div>
+<div class="deco" data-speed=".22" style="width:420px;height:420px;left:-140px;top:10%;background:radial-gradient(rgba(101,214,232,.2),transparent 70%)"></div>
+<div class="deco" data-speed=".35" style="width:54px;height:54px;right:7%;bottom:14%;border:2px solid rgba(101,214,232,.35)"></div>
+<div class="wrap hero-grid">
+<div class="hero-txt">
+<span class="tag" style="background:#ffffff14;border-color:#ffffff30;color:var(--cyan)">Kelas X</span>
+<h1>VIRUS INFLUENZA</h1>
+<p class="sub">Mengenal virus yang menyerang sistem pernapasan manusia.</p>
+<p class="lead" style="margin-bottom:2rem">Jelajahi struktur, karakteristik, proses infeksi, hingga cara mencegah penyebaran virus influenza.</p>
+<a class="btn" href="#pengertian">Mulai Eksplorasi</a>
+<p style="margin-top:2.2rem;line-height:1.5;color:#fff"><b style="letter-spacing:.04em">Keire Histon Tannuwidjaya</b><br><span style="color:var(--cyan);font-weight:600">Kelas X-1 · SMAN 2 Jakarta</span></p>
+</div>
+<div class="hero-art" id="heroVirus"></div>
+</div>
+<div class="scroll-hint" aria-hidden="true"></div>
+</section>
+
+<section id="pengertian" data-nav>
+<div class="deco" data-speed=".18" style="width:440px;height:440px;right:-170px;top:4%;background:radial-gradient(rgba(54,120,246,.12),transparent 70%)"></div>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Pengertian</span><h2>Apa Itu Virus Influenza?</h2></div>
+<div class="edit">
+<div>
+<p class="big rv" data-r="up">Virus influenza adalah virus RNA berselubung yang menginfeksi sel-sel saluran pernapasan, mulai dari hidung dan tenggorokan hingga paru-paru.</p>
+<p class="rv" data-r="up" data-d=".1s">Virus ini termasuk dalam famili <b>Orthomyxoviridae</b>. Ukurannya sekitar 80–120 nanometer, sehingga hanya dapat dilihat dengan mikroskop elektron. Seperti virus lain, ia tidak memiliki sel dan hanya dapat memperbanyak diri di dalam sel inang.</p>
+<div class="fam rv" data-r="up" data-d=".15s"><span>Famili: Orthomyxoviridae</span><span>Genom: RNA untai tunggal</span><span>Berselubung</span><span>Menyerang saluran napas</span></div>
+<div class="vs" data-stagger>
+<div class="card rv" data-r="up"><span class="chip">Virus influenza</span><p>Agen penyebab: partikel mikroskopis berisi RNA yang bereplikasi di dalam sel inang.</p></div>
+<div class="card rv" data-r="up"><span class="chip">Penyakit influenza (flu)</span><p>Penyakit saluran pernapasan akut yang muncul ketika tubuh terinfeksi virus tersebut.</p></div>
+</div></div>
+<div class="stats" data-stagger>
+<div class="card stat rv" data-r="up"><b data-count="4">0</b><span>jenis virus influenza: A, B, C, dan D</span></div>
+<div class="card stat rv" data-r="up"><b data-count="8">0</b><span>segmen RNA pada genom influenza A dan B</span></div>
+<div class="card stat rv" data-r="up"><b><span data-count="100">0</span> nm</b><span>perkiraan diameter partikel virus (80–120 nm)</span></div>
+<div class="card stat rv" data-r="up"><b data-count="18">0</b><span>subtipe hemagglutinin (H1–H18) pada influenza A</span></div>
+</div></div></div>
+</section>
+
+<section id="jenis" class="alt" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Klasifikasi</span><h2>Mengenal Jenis Virus Influenza</h2><p class="lead">Virus influenza dikelompokkan menjadi empat jenis. Pilih kartu untuk membuka detailnya.</p></div>
+<div class="grid" id="types" data-stagger></div>
+</div></section>
+
+<section id="struktur" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Struktur</span><h2>Anatomi Virus Influenza</h2><p class="lead">Klik titik bernomor atau labelnya untuk membaca fungsi tiap bagian. Aktifkan tampilan irisan untuk melihat isi virus.</p></div>
+<div class="stools rv" data-r="up"><div class="tabs" id="stabs" role="group" aria-label="Bagian virus"></div><button class="tab" id="cut" aria-pressed="false">Tampilan irisan</button></div>
+<div class="sbox rv" data-r="clip" id="sbox"></div>
+<div class="card info" id="sinfo" aria-live="polite"></div>
+</div></section>
+
+<section id="ciri" class="alt" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Karakteristik</span><h2>Ciri-Ciri Virus Influenza</h2></div>
+<div class="grid" id="feat" data-stagger></div>
+</div></section>
+
+<section id="penyebaran" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Penularan</span><h2>Bagaimana Virus Influenza Menyebar?</h2><p class="lead">Virus berpindah dari satu orang ke orang lain melalui udara dan sentuhan.</p></div>
+<div class="card tsvg rv" data-r="up" id="tsvg"></div>
+<div class="grid three" id="trans" data-stagger></div>
+</div></section>
+
+<section id="replikasi" class="alt" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Replikasi</span><h2>Bagaimana Virus Influenza Berkembang Biak?</h2><p class="lead">Tujuh tahap berurutan di dalam sel inang. Gulir untuk mengikuti setiap tahap.</p></div>
+<div class="rprog" id="rprog"><div class="rtrack"><i id="rfill"></i></div><div class="rdots" id="rdots"></div></div>
+<div id="stages"></div>
+</div></section>
+
+<section id="gejala" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Gejala</span><h2>Gejala Infeksi Influenza</h2></div>
+<div class="grid" id="sym" data-stagger></div>
+<p class="note rv" data-r="up">Gejala dapat berbeda pada setiap orang. Ada yang hanya mengalami gejala ringan, ada pula yang lebih berat. Jika gejala memburuk atau terasa mengkhawatirkan, segera periksakan diri ke tenaga kesehatan.</p>
+</div></section>
+
+<section id="pencegahan" class="alt" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up"><span class="tag">Pencegahan</span><h2>Bagaimana Cara Mencegah Influenza?</h2></div>
+<div class="grid" id="prev" data-stagger></div>
+</div></section>
+
+<section id="kuis" data-nav>
+<div class="wrap">
+<div class="head rv" data-r="up" style="margin-inline:auto;text-align:center"><span class="tag">Kuis</span><h2>Uji Pengetahuanmu!</h2></div>
+<div class="card quiz rv" data-r="up" id="qbox"></div>
+</div></section>
+
+<section id="penutup">
+<div class="deco" data-speed=".2" style="width:300px;height:300px;left:-80px;bottom:-60px;background:radial-gradient(rgba(101,214,232,.2),transparent 70%)"></div>
+<div class="wrap">
+<h2 class="rv" data-r="up">Science Begins With Curiosity.</h2>
+<p class="rv" data-r="up" data-d=".1s">Memahami virus influenza adalah langkah awal untuk mengenali bagaimana virus bekerja dan bagaimana kita dapat melindungi kesehatan bersama.</p>
+<button class="btn rv" data-r="up" data-d=".2s" id="toTop">Kembali ke Atas</button>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<div class="fg">
+<div><h3>Tentang situs ini</h3><p>Media belajar interaktif tentang virus influenza untuk siswa kelas X. Seluruh ilustrasi dibuat dalam 2D sebagai gambaran skematis, bukan skala sebenarnya.</p><p style="margin-top:.8rem"><b style="color:#fff">Disclaimer edukasi:</b> materi ini bersifat pembelajaran dan bukan pengganti saran, diagnosis, atau pengobatan dari tenaga kesehatan.</p></div>
+<div><h3>Navigasi</h3><ul><li><a href="#home">Beranda</a></li><li><a href="#pengertian">Pengertian</a></li><li><a href="#struktur">Struktur</a></li><li><a href="#replikasi">Replikasi</a></li><li><a href="#pencegahan">Pencegahan</a></li><li><a href="#kuis">Kuis</a></li></ul></div>
+<div><h3>Referensi</h3><ul>
+<li><small>World Health Organization (WHO). Influenza (Seasonal): lembar fakta.</small></li>
+<li><small>Centers for Disease Control and Prevention (CDC). Influenza (Flu): virus dan pencegahan.</small></li>
+<li><small>International Committee on Taxonomy of Viruses (ICTV). Famili Orthomyxoviridae.</small></li>
+<li><small>Reece, J. B., et al. Campbell Biology. Bab tentang virus.</small></li></ul></div>
+</div>
+<div class="cr">Virus Influenza · Pembelajaran Biologi Kelas X · Disusun oleh Keire Histon Tannuwidjaya, Kelas X-1, SMAN 2 Jakarta</div>
+</div></footer>
+
+<button id="top" aria-label="Kembali ke atas"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const dr=s=>s.replace(/<(path|circle|rect|line)\b/g,'<$1 class="draw" pathLength="1"');
+const R=(a,r,cx,cy)=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];
+
+/* ---------- Spikes HA (biru) dan NA (cyan) ---------- */
+function spikes(cx,cy,Rr,len,n,w){let s='';
+  for(let i=0;i<n;i++){const a=i*360/n,[x0,y0]=R(a,Rr-2,cx,cy);
+    if(i%4===2){const[x1,y1]=R(a,Rr+len*.75,cx,cy),[x2,y2]=R(a,Rr+len*.92,cx,cy);
+      s+=`<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#65D6E8" stroke-width="${w}" stroke-linecap="round"/><ellipse cx="${x2}" cy="${y2}" rx="${w*1.9}" ry="${w*1.1}" transform="rotate(${a+90} ${x2} ${y2})" fill="#65D6E8" stroke="#3678F6" stroke-width="${w*.35}"/>`;}
+    else{const[x1,y1]=R(a,Rr+len*.62,cx,cy),[tx,ty]=R(a,Rr+len,cx,cy),[b1x,b1y]=R(a-3.2,Rr+len*.78,cx,cy),[b2x,b2y]=R(a+3.2,Rr+len*.78,cx,cy);
+      s+=`<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#3678F6" stroke-width="${w}" stroke-linecap="round"/><polygon points="${b1x},${b1y} ${b2x},${b2y} ${tx},${ty}" fill="#3678F6" stroke="#3678F6" stroke-width="${w*.4}" stroke-linejoin="round"/>`;}}
+  return s;}
+
+/* ---------- Hero ---------- */
+(function(){let s='<svg viewBox="0 0 400 400" role="img" aria-label="Ilustrasi 2D virus influenza"><defs><radialGradient id="g1" cx="38%" cy="32%"><stop offset="0" stop-color="#8fd0ff" stop-opacity=".6"/><stop offset="1" stop-color="#3678F6" stop-opacity=".35"/></radialGradient></defs>';
+  s+='<circle cx="200" cy="200" r="178" fill="none" stroke="#65D6E8" stroke-opacity=".5" stroke-width="1.5" class="draw" pathLength="1" style="--d:.4s;transform:rotate(-90deg);transform-origin:200px 200px"/>';
+  s+=spikes(200,200,112,26,36,4.5)+'<circle cx="200" cy="200" r="112" fill="url(#g1)" stroke="#3678F6" stroke-width="3.5"/><circle cx="200" cy="200" r="94" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="6"/>';
+  for(let k=0;k<8;k++){const a=20+k*45,[x,y]=R(a,46,200,200);s+=`<g transform="translate(${x} ${y}) rotate(${a+90})"><rect x="-22" y="-7" width="44" height="14" rx="7" fill="#EAF3FF" stroke="#3678F6" stroke-width="2"/><line x1="-18" y1="0" x2="18" y2="0" stroke="#F5A524" stroke-width="2.5"/><circle cx="19" cy="0" r="6" fill="#65D6E8" stroke="#3678F6" stroke-width="1.5"/></g>`;}
+  $('#heroVirus').innerHTML=s+'</svg>';
+  const hv=$('#heroVirus');requestAnimationFrame(()=>setTimeout(()=>hv.classList.add('in'),300));
+  let p='';for(let i=0;i<16;i++)p+=`<span class="part" style="--x:${Math.random()*100}%;--s:${4+Math.random()*10}px;--t:${12+Math.random()*14}s;--dl:-${Math.random()*20}s"></span>`;
+  $('#parts').innerHTML=p;})();
+
+/* ---------- Jenis ---------- */
+const V=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c||'rgba(54,120,246,.2)'}" stroke="#3678F6" stroke-width="2.5"/><circle cx="${x}" cy="${y}" r="${r*.45}" fill="#EAF3FF" stroke="#65D6E8" stroke-width="2"/>`+spikes(x,y,r,r*.4,16,2);
+const pill=(x,y,t)=>`<rect x="${x-24}" y="${y-10}" width="48" height="20" rx="10" fill="#fff" stroke="#bcd3f8"/><text x="${x}" y="${y+4}" font-size="11" font-weight="700" text-anchor="middle" fill="#172B4D">${t}</text>`;
+const person=(x,c)=>`<circle cx="${x}" cy="62" r="11" fill="#fff" stroke="${c}" stroke-width="2.5"/><path d="M${x-20} 112v-18a20 20 0 0140 0v18z" fill="#fff" stroke="${c}" stroke-width="2.5"/>`;
+const types=[
+ ['Influenza A','Menginfeksi manusia dan berbagai hewan','Manusia, burung, babi, dan hewan lain','Dikelompokkan menjadi subtipe berdasarkan protein hemagglutinin (H) dan neuraminidase (N).','H1N1 dan H3N2',V(100,60,34)+pill(38,26,'H1N1')+pill(162,26,'H3N2')+pill(38,102,'H5N1')+pill(162,102,'H7N9')],
+ ['Influenza B','Terutama menginfeksi manusia','Hampir hanya manusia','Ikut menyebabkan wabah influenza musiman. Tidak dibagi menjadi subtipe H dan N seperti influenza A.','Penyebab flu musiman',V(70,60,34)+person(145,'#3678F6')],
+ ['Influenza C','Umumnya menyebabkan sakit ringan','Terutama manusia','Gejala pernapasannya cenderung lebih ringan dan jarang dikaitkan dengan wabah besar.','Infeksi pernapasan ringan',V(70,60,26)+'<rect x="115" y="50" width="70" height="10" rx="5" fill="#dbe6f8"/><rect x="115" y="50" width="22" height="10" rx="5" fill="#65D6E8"/><text x="150" y="82" font-size="11" font-weight="700" text-anchor="middle" fill="#172B4D">ringan</text>'],
+ ['Influenza D','Terutama menyerang sapi','Sapi dan ternak lain','Belum dikenal sebagai penyebab penyakit penting pada manusia.','Ditemukan pada ternak',V(52,60,26)+'<rect x="94" y="48" width="64" height="32" rx="12" fill="#fff" stroke="#3678F6" stroke-width="2.5"/><rect x="152" y="42" width="26" height="22" rx="8" fill="#fff" stroke="#3678F6" stroke-width="2.5"/><path d="M158 42l-3-8M172 42l3-8" stroke="#3678F6" stroke-width="2.5" stroke-linecap="round"/><path d="M104 80v22M120 80v22M134 80v22M148 80v22" stroke="#3678F6" stroke-width="3" stroke-linecap="round"/>']];
+$('#types').innerHTML=types.map((t,i)=>`<article class="card type hv rv" data-r="up"><svg viewBox="0 0 200 120" aria-hidden="true">${t[5]}</svg><h3>${t[0]}</h3><p>${t[1]}</p><div class="more" id="m${i}"><ul><li><b>Inang:</b> ${t[2]}</li><li>${t[3]}</li><li><b>Contoh:</b> ${t[4]}</li></ul></div><button class="tg" aria-expanded="false" aria-controls="m${i}" data-i="${i}">Lihat detail</button></article>`).join('');
+$$('.tg').forEach(b=>b.addEventListener('click',()=>{const m=$('#m'+b.dataset.i),o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',!o);m.style.maxHeight=o?'0':m.scrollHeight+'px';b.firstChild.textContent=o?'Lihat detail':'Tutup'}));
+
+/* ---------- Struktur ---------- */
+const CX=450,CY=300,RR=190;
+const sp=(i,r)=>R(i*10,r,CX,CY);
+const parts=[
+ {n:'Hemagglutinin (HA)',t:'Protein permukaan',d:'Protein berbentuk tonjolan di permukaan virus. HA mengikat reseptor (asam sialat) pada sel saluran pernapasan, sehingga menentukan awal infeksi. Tubuh membentuk antibodi terutama terhadap HA.',a:sp(29,222),l:[722,70,'r']},
+ {n:'Neuraminidase (NA)',t:'Enzim permukaan',d:'Enzim berbentuk seperti jamur di permukaan virus. NA memotong ikatan antara virus baru dan sel inang sehingga partikel virus dapat dilepaskan dan menyebar ke sel lain.',a:sp(34,222),l:[722,190,'r']},
+ {n:'Saluran ion M2',t:'Protein selubung',d:'Protein berbentuk saluran yang menembus selubung. M2 memasukkan ion H⁺ ke dalam virus saat berada di endosom sehingga isi virus dapat dilepaskan ke sitoplasma (uncoating).',a:R(35,RR,CX,CY),l:[722,420,'r']},
+ {n:'Selubung lipid',t:'Lapisan luar',d:'Lapisan lemak ganda yang berasal dari membran sel inang saat virus keluar. Selubung menanamkan HA, NA, dan M2. Sabun dapat merusaknya sehingga virus menjadi tidak aktif.',a:R(215,RR,CX,CY),l:[178,90,'l']},
+ {n:'Protein matriks M1',t:'Lapisan dalam',d:'Lapisan protein tepat di bawah selubung yang menjaga bentuk partikel virus dan menghubungkan selubung dengan inti ribonukleoprotein. M1 juga berperan saat perakitan virus baru.',a:R(190,168,CX,CY),l:[178,230,'l']},
+ {n:'Nukleoprotein (NP)',t:'Pembungkus RNA',d:'Protein yang membungkus tiap segmen RNA sehingga membentuk struktur ribonukleoprotein (RNP). NP melindungi RNA dan membantu pengangkutannya ke dalam inti sel inang.',a:R(155,78,CX,CY),l:[178,350,'l']},
+ {n:'Genom RNA',t:'Materi genetik',d:'Genom influenza A dan B terdiri atas 8 segmen RNA untai tunggal berpolaritas negatif. Setiap segmen membawa gen untuk protein virus. Segmen yang terpisah memudahkan pertukaran gen antarvirus.',a:R(110,78,CX,CY),l:[178,470,'l']}];
+function structSVG(){
+  let s=`<svg viewBox="0 0 900 600" role="img" aria-label="Penampang 2D virus influenza dengan tujuh bagian bertanda"><defs><radialGradient id="eg" cx="38%" cy="32%"><stop offset="0" stop-color="#9fd6ff" stop-opacity=".55"/><stop offset="1" stop-color="#3678F6" stop-opacity=".25"/></radialGradient><clipPath id="cutp"><path clip-rule="evenodd" d="M0 0H900V600H0Z M450 300L400 820L-50 560Z"/></clipPath></defs><g id="shell">`;
+  s+=spikes(CX,CY,RR,40,36,6.5);
+  for(let k=0;k<12;k+=3){const a=k*10+5,[x,y]=R(a,RR,CX,CY);s+=`<g transform="translate(${x} ${y}) rotate(${a})"><rect x="-16" y="-5.5" width="32" height="11" rx="4" fill="#F5A524" stroke="#b6740d" stroke-width="1.5"/></g>`;}
+  for(let k=15;k<36;k+=3){const a=k*10+5,[x,y]=R(a,RR,CX,CY);s+=`<g transform="translate(${x} ${y}) rotate(${a})"><rect x="-16" y="-5.5" width="32" height="11" rx="4" fill="#F5A524" stroke="#b6740d" stroke-width="1.5"/></g>`;}
+  s+=`<circle cx="${CX}" cy="${CY}" r="${RR}" fill="url(#eg)" stroke="#3678F6" stroke-width="4"/><circle cx="${CX}" cy="${CY}" r="${RR-11}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.5" stroke-dasharray="4 7"/><circle cx="${CX}" cy="${CY}" r="168" fill="none" stroke="#7fb0ff" stroke-width="9" stroke-opacity=".75"/></g><g id="core">`;
+  for(let k=0;k<8;k++){const a=20+k*45,[x,y]=R(a,78,CX,CY);
+    s+=`<g transform="translate(${x} ${y}) rotate(${a+90})"><rect x="-30" y="-9" width="60" height="18" rx="9" fill="#E6F0FF" stroke="#3678F6" stroke-width="2"/><circle cx="-20" cy="0" r="5" fill="#3678F6" fill-opacity=".35" stroke="#3678F6"/><circle cx="-7" cy="0" r="5" fill="#3678F6" fill-opacity=".35" stroke="#3678F6"/><circle cx="6" cy="0" r="5" fill="#3678F6" fill-opacity=".35" stroke="#3678F6"/><line x1="-27" y1="0" x2="25" y2="0" stroke="#F5A524" stroke-width="2.8" stroke-linecap="round"/><circle cx="25" cy="0" r="8" fill="#65D6E8" stroke="#3678F6" stroke-width="2"/></g>`;}
+  s+='</g>';
+  parts.forEach((p,i)=>{const[x,y]=p.a,[lx,ly,sd]=p.l,ex=sd==='r'?lx-6:lx+6,len=Math.hypot(x-ex,y-ly).toFixed(0);
+    s+=`<g class="hs" data-i="${i}" tabindex="0" role="button" aria-label="${p.n}"><path class="ln" pathLength="1" style="--d:${.2+i*.15}s" d="M${x} ${y}L${ex} ${ly}"/><circle class="pulse" cx="${x}" cy="${y}" r="13"/><circle class="dot" cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y+5}" text-anchor="middle" style="fill:#fff;font-size:14px;font-weight:700">${i+1}</text><text x="${lx}" y="${ly+8}" text-anchor="${sd==='r'?'start':'end'}">${p.n}</text></g>`;});
+  return s+'</svg>';}
+$('#sbox').innerHTML=structSVG();
+const stabs=$('#stabs'),sinfo=$('#sinfo');
+parts.forEach((p,i)=>{const b=document.createElement('button');b.className='tab';b.textContent=(i+1)+'. '+p.n.replace(/ \(.*\)/,'');b.addEventListener('click',()=>pick(i));stabs.appendChild(b)});
+function pick(i){const p=parts[i];
+  $$('.hs').forEach((h,j)=>h.classList.toggle('on',i===j));
+  $$('.tab',stabs).forEach((t,j)=>t.setAttribute('aria-selected',i===j));
+  sinfo.innerHTML=`<div class="num">${i+1}</div><div><span class="chip">${p.t}</span><h3>${p.n}</h3><p>${p.d}</p></div>`;
+  sinfo.classList.remove('swap');void sinfo.offsetWidth;sinfo.classList.add('swap');}
+$$('.hs').forEach(h=>{h.addEventListener('click',()=>pick(+h.dataset.i));h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(+h.dataset.i)}})});
+pick(0);
+$('#cut').addEventListener('click',function(){const on=this.getAttribute('aria-pressed')!=='true';this.setAttribute('aria-pressed',on);$('#shell').setAttribute('clip-path',on?'url(#cutp)':'')});
+
+/* ---------- Ciri ---------- */
+const feats=[
+ ['RNA bersegmen','Genomnya berupa RNA untai tunggal berpolaritas negatif yang terbagi menjadi beberapa segmen.','<path d="M3 8c3-5 6 5 9 0s6 5 9 0"/><path d="M3 16c3-5 6 5 9 0s6 5 9 0"/>'],
+ ['Berselubung lipid','Dibungkus selubung lemak yang berasal dari membran sel inang.','<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>'],
+ ['Protein HA dan NA','Permukaan virus dipenuhi hemagglutinin untuk menempel dan neuraminidase untuk melepaskan diri.','<path d="M12 21V10M12 10L6 4M12 10l6-6"/>'],
+ ['Butuh sel inang','Tidak memiliki sel dan metabolisme sendiri, sehingga memakai mesin sel inang untuk bereplikasi.','<rect x="3" y="5" width="18" height="14" rx="7"/><circle cx="14" cy="12" r="3"/>'],
+ ['Dapat berubah secara genetik','Mutasi kecil dan pertukaran segmen gen membuat virus berubah, sehingga vaksin perlu diperbarui.','<path d="M4 12a8 8 0 0114-5M20 12a8 8 0 01-14 5M18 3v4h-4M6 21v-4h4"/>'],
+ ['Menyerang saluran napas','Sel-sel yang melapisi hidung, tenggorokan, dan paru-paru adalah sasaran utamanya.','<path d="M12 3v8M12 11c-3 0-6 2-6 6v2h5v-8M12 11c3 0 6 2 6 6v2h-5v-8"/>']];
+$('#feat').innerHTML=feats.map(f=>`<article class="card feat hv rv" data-r="up"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${dr(f[2])}</svg></div><h3>${f[0]}</h3><p>${f[1]}</p><div class="bar"></div></article>`).join('');
+
+/* ---------- Penyebaran ---------- */
+(function(){const pt=(x,y,r,d,o)=>`<circle class="pp" cx="${x}" cy="${y}" r="${r}" fill="${o||'#65D6E8'}" stroke="#3678F6" stroke-width="1.5" style="--d:${d}s"/>`;
+  let s='<svg viewBox="0 0 800 320" role="img" aria-label="Ilustrasi penyebaran virus influenza melalui percikan, aerosol, dan permukaan"><line x1="20" y1="280" x2="780" y2="280" stroke="#cfdcf3" stroke-width="3" stroke-linecap="round"/>';
+  s+='<circle cx="130" cy="120" r="28" fill="#fff" stroke="#3678F6" stroke-width="3"/><path d="M80 280v-60a50 50 0 01100 0v60z" fill="#EAF3FF" stroke="#3678F6" stroke-width="3"/>';
+  s+='<circle cx="650" cy="120" r="28" fill="#fff" stroke="#172B4D" stroke-width="3"/><path d="M600 280v-60a50 50 0 01100 0v60z" fill="#EAF3FF" stroke="#172B4D" stroke-width="3"/>';
+  s+='<path class="draw" pathLength="1" d="M166 126C290 40 440 40 612 126" fill="none" stroke="#3678F6" stroke-width="2" stroke-opacity=".5" style="--d:.2s"/>';
+  [[198,104,7],[236,86,6],[284,72,5.5],[336,64,5],[392,62,4.5],[448,64,4.5],[500,72,4],[552,88,3.5],[590,108,3.5]].forEach((p,i)=>s+=pt(p[0],p[1],p[2],.5+i*.12));
+  [[300,30,3],[330,22,2.5],[372,34,3],[420,24,2.5],[452,36,2],[350,44,2.5],[400,42,2]].forEach((p,i)=>s+=pt(p[0],p[1],p[2],1.4+i*.1,'#BFEFF6'));
+  s+='<text x="400" y="16" text-anchor="middle">Percikan (droplet) dan aerosol saat batuk, bersin, atau berbicara</text>';
+  s+='<rect x="340" y="236" width="150" height="12" rx="6" fill="#dbe6f8" stroke="#3678F6" stroke-width="2"/><path d="M360 248v32M470 248v32" stroke="#3678F6" stroke-width="3"/>';
+  [[372,230],[410,228],[448,230],[474,229]].forEach((p,i)=>s+=pt(p[0],p[1],4,2+i*.12));
+  s+='<path class="draw" pathLength="1" d="M474 226C560 220 600 190 628 134" fill="none" stroke="#F5A524" stroke-width="2.5" stroke-linecap="round" style="--d:2.4s"/>';
+  s+='<text x="415" y="272" text-anchor="middle">Permukaan terkontaminasi</text><text x="560" y="204" text-anchor="middle" style="fill:#b6740d">tangan menyentuh wajah</text></svg>';
+  $('#tsvg').innerHTML=s;
+  const t=[['Percikan dan aerosol','Batuk, bersin, atau berbicara melepaskan percikan besar dan partikel halus yang bisa terhirup orang di dekatnya.','<circle cx="6" cy="12" r="2"/><circle cx="12" cy="8" r="1.5"/><circle cx="12" cy="16" r="1.5"/><circle cx="18" cy="12" r="1"/>'],
+   ['Kontak langsung','Berjabat tangan atau menyentuh orang yang sedang terinfeksi dapat memindahkan virus ke tangan.','<path d="M7 11V5a2 2 0 014 0v5m0-4a2 2 0 014 0v4m0-1a2 2 0 014 0v6a7 7 0 01-7 7h-1a6 6 0 01-6-6v-3a2 2 0 014 0"/>'],
+   ['Permukaan tercemar','Virus dapat menempel pada gagang pintu atau meja. Menyentuh wajah setelahnya memudahkan virus masuk.','<path d="M3 10h18M6 10v10M18 10v10"/>']];
+  $('#trans').innerHTML=t.map(x=>`<article class="card hv rv" data-r="up"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${x[2]}</svg></div><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join('');})();
+
+/* ---------- Replikasi (7 tahap) ---------- */
+const vm=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="rgba(54,120,246,.22)" stroke="#3678F6" stroke-width="2"/><circle cx="${x}" cy="${y}" r="${r*.42}" fill="#EAF3FF" stroke="#F5A524" stroke-width="2"/>`+spikes(x,y,r,r*.4,12,1.8);
+const rod=(x,y,a)=>`<g transform="translate(${x} ${y}) rotate(${a||0})"><rect x="-9" y="-3.5" width="18" height="7" rx="3.5" fill="#E6F0FF" stroke="#3678F6" stroke-width="1.2"/><line x1="-6" y1="0" x2="6" y2="0" stroke="#F5A524" stroke-width="1.6"/></g>`;
+const Y=(x,y)=>`<path d="M${x} ${y}v-9M${x} ${y-9}l-3-4M${x} ${y-9}l3-4" stroke="#3678F6" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+const rec=(xs)=>xs.map(x=>`<path d="M${x} 100v-7" stroke="#F5A524" stroke-width="2"/><circle cx="${x}" cy="91" r="2.6" fill="#F5A524"/>`).join('');
+const tx=(x,y,t,a)=>`<text x="${x}" y="${y}" text-anchor="${a||'start'}">${t}</text>`;
+function base(nuc){return `<svg viewBox="0 0 320 200" role="img" aria-label="Skema tahap replikasi"><rect y="100" width="320" height="100" fill="#EAF3FF"/><rect x="190" y="130" width="116" height="58" rx="29" fill="${nuc?'#fff':'#f6f9ff'}" stroke="${nuc?'#3678F6':'#9bb8e8'}" stroke-width="${nuc?3:2}"/>${tx(248,184,'inti sel','middle')}${tx(14,192,'sitoplasma sel inang')}`;}
+const scenes=[
+ ()=>base()+'<path d="M0 100H320" stroke="#3678F6" stroke-width="5"/>'+rec([100,130,160])+vm(130,68,26)+tx(14,28,'HA')+'<path d="M32 28l50 24" stroke="#243257" stroke-width="1" fill="none"/>'+tx(210,60,'HA menempel pada reseptor')+tx(210,74,'di permukaan sel'),
+ ()=>base()+'<path d="M0 100H96Q130 156 164 100H320" stroke="#3678F6" stroke-width="5" fill="none"/>'+vm(130,112,19)+tx(210,60,'Sel menelan virus')+tx(210,74,'(endositosis)'),
+ ()=>base()+'<path d="M0 100H320" stroke="#3678F6" stroke-width="5"/><circle cx="120" cy="140" r="34" fill="none" stroke="#7fa6e8" stroke-width="2" stroke-dasharray="4 4"/>'+tx(120,186,'endosom','middle')+rod(110,132,20)+rod(128,146,-10)+rod(142,128,40)+rod(160,150,0)+'<path d="M172 150H196" stroke="#F5A524" stroke-width="2.4" marker-end="url(#ar)"/><path d="M190 144l8 6-8 6" stroke="#F5A524" stroke-width="2.4" fill="none"/>'+tx(210,60,'H⁺ masuk lewat M2,')+tx(210,74,'RNA dilepaskan ke inti'),
+ ()=>base(1)+'<path d="M0 100H320" stroke="#3678F6" stroke-width="5"/>'+rod(212,148,0)+rod(236,160,20)+rod(262,148,-15)+rod(284,162,0)+rod(222,172,10)+rod(272,174,-8)+'<path d="M250 130q14-18 30 0t30 0" stroke="#7a5af8" stroke-width="2.2" fill="none"/>'+tx(210,60,'Di dalam inti: RNA disalin')+tx(210,74,'menjadi RNA baru dan mRNA'),
+ ()=>base()+'<path d="M0 100H320" stroke="#3678F6" stroke-width="5"/>'+'<path d="M200 138q-24 -18 -48 0t-48 0" stroke="#7a5af8" stroke-width="2.2" fill="none"/>'+[[190,134],[168,138],[146,128],[124,134],[104,128]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#172B4D"/>`).join('')+Y(90,160)+Y(120,170)+Y(60,150)+tx(14,128,'ribosom')+tx(210,60,'Ribosom sel inang membuat')+tx(210,74,'protein HA, NA, dan M1'),
+ ()=>base()+'<path d="M0 100H320" stroke="#3678F6" stroke-width="5"/>'+Y(60,92)+Y(100,92)+Y(140,92)+'<path d="M40 108H170" stroke="#7fb0ff" stroke-width="6" stroke-opacity=".8"/>'+rod(70,122,0)+rod(100,130,15)+rod(128,124,-10)+'<path d="M190 150Q170 140 150 128" stroke="#F5A524" stroke-width="2" fill="none"/>'+tx(210,60,'Komponen berkumpul di')+tx(210,74,'membran: HA, NA, M1, RNP'),
+ ()=>base()+'<path d="M0 100H104Q104 80 130 80T156 100H320" stroke="#3678F6" stroke-width="5" fill="none"/>'+vm(130,78,22)+'<path d="M178 60L234 34" stroke="#243257" stroke-width="1.5"/>'+vm(250,36,20)+tx(210,126,'NA melepas virus baru','start')+tx(14,28,'tunas')+tx(210,138,'dari sel inang')]
+;
+const stg=[['Perlekatan (attachment)','HA pada permukaan virus mengikat reseptor yang cocok pada sel inang, seperti kunci yang masuk ke gembok.'],
+ ['Masuk ke sel (entry)','Sel menelan virus lewat endositosis sehingga virus berada di dalam kantong yang disebut endosom.'],
+ ['Pelepasan materi genetik (uncoating)','Lingkungan endosom yang asam dan saluran M2 membuat selubung virus melebur. Segmen RNA (RNP) terlepas dan bergerak ke inti sel.'],
+ ['Replikasi dan transkripsi','Di dalam inti, RNA virus disalin menjadi RNA baru dan mRNA. Influenza termasuk virus RNA yang bereplikasi di inti sel inang.'],
+ ['Sintesis protein','mRNA keluar ke sitoplasma. Ribosom sel inang menerjemahkannya menjadi protein virus seperti HA, NA, dan M1.'],
+ ['Perakitan (assembly)','HA, NA, dan M2 tertanam di membran sel, sedangkan M1 dan RNP baru berkumpul di bawahnya untuk membentuk virus baru.'],
+ ['Pertunasan dan pelepasan','Partikel virus menonjol keluar dan melepaskan diri dengan membawa selubung dari membran sel. NA memotong ikatan dengan sel sehingga virus bebas menyebar.']];
+$('#stages').innerHTML=stg.map((s,i)=>`<div class="stg" data-s="${i}"><div class="card sc rv" data-r="${i%2?'right':'left'}">${scenes[i]()}</div><div class="txt rv" data-r="${i%2?'left':'right'}" data-d=".12s"><span class="chip">Tahap ${i+1} dari 7</span><h3 style="font-size:1.5rem">${s[0]}</h3><p>${s[1]}</p></div></div>`).join('');
+$('#rdots').innerHTML=stg.map((s,i)=>`<button class="rd" data-n="${i+1}" data-i="${i}" aria-label="Ke tahap ${i+1}">${i+1}. ${s[0].split(' (')[0].split(' ')[0]}</button>`).join('');
+$$('.rd').forEach(b=>b.addEventListener('click',()=>$$('.stg')[+b.dataset.i].scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})));
+function setStage(i){$$('.rd').forEach((d,j)=>{d.classList.toggle('on',j===i);d.classList.toggle('done',j<i)});$('#rfill').style.width=((i+1)/7*100)+'%'}
+const stio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setStage(+e.target.dataset.s)}),{rootMargin:'-42% 0px -42% 0px'});
+$$('.stg').forEach(s=>stio.observe(s));setStage(0);
+
+/* ---------- Gejala & Pencegahan ---------- */
+const sy=[['Demam atau menggigil','Suhu tubuh naik sebagai respons sistem imun terhadap infeksi.','<path d="M10 4a2 2 0 014 0v9a4 4 0 11-4 0z"/>'],
+ ['Batuk','Batuk kering yang bisa berlangsung lama saat saluran napas teriritasi.','<path d="M4 8h9M4 12h6M4 16h9"/><circle cx="18" cy="12" r="3"/>'],
+ ['Sakit tenggorokan','Terasa nyeri atau gatal ketika menelan karena peradangan.','<circle cx="12" cy="12" r="8"/><path d="M12 7v10"/>'],
+ ['Pilek atau hidung tersumbat','Lendir berlebih menyumbat hidung dan membuat napas kurang nyaman.','<path d="M12 3c4 5 6 8 6 11a6 6 0 01-12 0c0-3 2-6 6-11z"/>'],
+ ['Nyeri otot','Pegal di badan, punggung, atau lengan dan tungkai.','<path d="M6 9v6M18 9v6M3 11v2M21 11v2M6 12h12"/>'],
+ ['Sakit kepala','Kepala terasa berdenyut atau berat selama sakit.','<circle cx="12" cy="13" r="8"/><path d="M12 3l-2 5h4l-2 5"/>'],
+ ['Kelelahan','Tubuh terasa lemas dan butuh banyak istirahat.','<path d="M3 8h15v8H3zM21 11v2M6 11v2"/>']];
+$('#sym').innerHTML=sy.map(x=>`<article class="card sym hv rv" data-r="up"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${dr(x[2])}</svg></div><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join('');
+const pv=[['Vaksinasi influenza tahunan','Vaksin dibuat ulang tiap tahun menyesuaikan virus yang beredar, sehingga perlu diulang setiap tahun.','<path d="M5 19l4-4M14 4l6 6M12 6l6 6-7 7-6-6z"/>'],
+ ['Cuci tangan secara teratur','Gunakan air mengalir dan sabun minimal 20 detik, terutama sebelum makan dan setelah batuk.','<path d="M7 11V5a2 2 0 014 0v5m0-4a2 2 0 014 0v4m0-1a2 2 0 014 0v6a7 7 0 01-7 7h-1a6 6 0 01-6-6v-3a2 2 0 014 0"/>'],
+ ['Tutup mulut dan hidung','Saat batuk atau bersin, tutup dengan tisu atau lengan atas bagian dalam, bukan telapak tangan.','<path d="M5 10c4-4 10-4 14 0M5 10v6a4 4 0 004 4h6"/>'],
+ ['Jaga kebersihan pernapasan','Buang tisu bekas pakai dengan benar, hindari menyentuh wajah, dan pakai masker bila sedang sakit.','<path d="M5 5h14v14H5zM9 9h6M9 13h4"/>'],
+ ['Tinggal di rumah saat sakit','Beristirahat di rumah mencegah virus menular ke teman sekelas dan keluarga.','<path d="M3 11l9-8 9 8v9H3zM9 20v-6h6v6"/>'],
+ ['Perbaiki ventilasi','Buka jendela dan pastikan udara bersirkulasi agar partikel virus tidak menumpuk di dalam ruangan.','<path d="M4 4h16v16H4zM12 4v16M4 12h16"/>']];
+$('#prev').innerHTML=pv.map(x=>`<article class="card hv rv" data-r="up"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${dr(x[2])}</svg></div><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join('');
+
+/* ---------- Kuis ---------- */
+const Q=[
+ ['Virus influenza termasuk ke dalam famili…','Orthomyxoviridae',['Coronaviridae','Orthomyxoviridae','Retroviridae','Herpesviridae'],'Virus influenza adalah anggota famili Orthomyxoviridae.'],
+ ['Jenis virus influenza yang diketahui terdiri atas…','Influenza A, B, C, dan D',['Influenza A dan B saja','Influenza A, B, dan C','Influenza A, B, C, dan D','Influenza A sampai F'],'Terdapat empat jenis: A, B, C, dan D.'],
+ ['Subtipe influenza A seperti H1N1 ditentukan oleh protein…','Hemagglutinin dan neuraminidase',['Kapsid dan selubung','Hemagglutinin dan neuraminidase','Nukleoprotein dan matriks','Ribosom dan DNA polimerase'],'H singkatan hemagglutinin dan N singkatan neuraminidase.'],
+ ['Fungsi utama hemagglutinin (HA) adalah…','Mengikat reseptor pada sel inang',['Memotong virus dari sel inang','Mengikat reseptor pada sel inang','Membungkus RNA virus','Membuat energi untuk virus'],'HA mengikat reseptor asam sialat pada sel inang saat perlekatan.'],
+ ['Fungsi neuraminidase (NA) adalah…','Membantu virus baru lepas dari sel inang',['Membantu virus baru lepas dari sel inang','Menyimpan materi genetik','Membentuk selubung lipid','Menyalin RNA virus'],'NA memotong ikatan virus dengan sel sehingga virus baru dapat menyebar.'],
+ ['Materi genetik virus influenza berupa…','RNA untai tunggal bersegmen',['DNA untai ganda','RNA untai tunggal bersegmen','DNA untai tunggal melingkar','Protein tanpa asam nukleat'],'Genomnya RNA untai tunggal berpolaritas negatif yang terbagi menjadi segmen.'],
+ ['Virus influenza paling umum menular melalui…','Percikan atau aerosol dan kontak dengan permukaan tercemar',['Gigitan nyamuk','Percikan atau aerosol dan kontak dengan permukaan tercemar','Makanan yang tidak matang saja','Sinar matahari'],'Penularan terjadi lewat droplet, aerosol, dan sentuhan permukaan yang tercemar.'],
+ ['Tahap replikasi virus influenza setelah virus masuk ke sel dan melepaskan RNA adalah…','Replikasi dan transkripsi RNA di inti sel',['Pertunasan','Replikasi dan transkripsi RNA di inti sel','Perlekatan','Pembelahan biner'],'Setelah uncoating, RNP menuju inti dan RNA disalin di sana.'],
+ ['Manakah yang BUKAN gejala khas influenza?','Ruam melepuh di seluruh kulit',['Demam atau menggigil','Batuk','Nyeri otot','Ruam melepuh di seluruh kulit'],'Gejala khas influenza meliputi demam, batuk, nyeri otot, sakit kepala, dan kelelahan.'],
+ ['Mengapa vaksin influenza perlu diberikan setiap tahun?','Virus dapat berubah secara genetik',['Vaksin cepat kedaluwarsa dalam sehari','Virus dapat berubah secara genetik','Antibodi hilang dalam seminggu','Virus hanya muncul sekali setahun'],'Perubahan genetik membuat virus yang beredar berbeda dari tahun ke tahun.']];
+let qi=0,score=0;const qb=$('#qbox');
+function ask(){const q=Q[qi];
+  qb.innerHTML=`<div class="qtop"><span>Pertanyaan ${qi+1} dari ${Q.length}</span><span>Skor: ${score}</span></div><div class="pbar"><i style="width:${qi/Q.length*100}%"></i></div><p class="q">${q[0]}</p><div class="opts">${q[2].map(o=>`<button class="opt">${o}</button>`).join('')}</div><div class="fb" aria-live="polite"></div>`;
+  $$('.opt',qb).forEach(b=>b.addEventListener('click',()=>answer(b)));}
+function answer(b){const q=Q[qi],ok=b.textContent===q[1];if(ok)score++;
+  $$('.opt',qb).forEach(o=>{o.disabled=true;if(o.textContent===q[1])o.classList.add('ok')});if(!ok)b.classList.add('no');
+  $('.fb',qb).innerHTML=`<strong>${ok?'Benar. ':'Belum tepat. '}</strong>${q[3]}<div style="margin-top:.9rem"><button class="btn" id="nx" style="padding:.7rem 1.4rem">${qi===Q.length-1?'Lihat skor':'Lanjut'}</button></div>`;
+  $('#nx').focus({preventScroll:true});$('#nx').addEventListener('click',()=>{qi++;qi<Q.length?ask():done()});}
+function done(){const m=score>=9?'Luar biasa! Kamu menguasai materi influenza.':score>=7?'Bagus. Ulangi materi yang belum tepat untuk menyempurnakannya.':'Tidak apa-apa. Baca ulang materinya, lalu coba lagi.';
+  qb.innerHTML=`<div class="res"><p>Skor akhirmu</p><b>${score}/${Q.length}</b><div class="pbar" style="margin:1.2rem 0"><i style="width:100%"></i></div><p style="margin-bottom:1.6rem">${m}</p><button class="btn" id="rp">Mulai Ulang Kuis</button></div>`;
+  $('#rp').addEventListener('click',()=>{qi=0;score=0;ask()});}
+ask();
+
+/* ---------- Scroll system ---------- */
+$$('[data-stagger]').forEach(g=>$$('.rv',g).forEach((c,i)=>c.style.setProperty('--d',(i*.1)+'s')));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+function count(el){const to=+el.dataset.count;if(reduce){el.textContent=to;return}const t0=performance.now();(function f(t){const p=Math.min((t-t0)/1600,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){count(e.target);cio.unobserve(e.target)}}),{threshold:.6});
+$$('[data-count]').forEach(el=>cio.observe(el));
+
+const links=$$('.links a');
+const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+$$('section[data-nav]').forEach(s=>sio.observe(s));
+
+const bar=$('#bar'),topB=$('#top'),nav=$('#nav'),decos=$$('.deco');let tick=false;
+function onScroll(){tick=false;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.transform='scaleX('+(h>0?y/h:0)+')';topB.classList.toggle('show',y>700);nav.classList.toggle('solid',y>60);
+  if(!reduce)decos.forEach(d=>{const r=d.parentElement.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)d.style.transform='translate3d(0,'+(-r.top*(+d.dataset.speed)).toFixed(1)+'px,0)'});}
+addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});
+addEventListener('resize',onScroll);onScroll();
+const up=()=>scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+topB.addEventListener('click',up);$('#toTop').addEventListener('click',up);
+
+const bg=$('#burger'),lk=$('#links');
+const menu=o=>{lk.classList.toggle('open',o);bg.setAttribute('aria-expanded',o);bg.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
+bg.addEventListener('click',()=>menu(!lk.classList.contains('open')));
+links.forEach(a=>a.addEventListener('click',()=>menu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')menu(false)});
+})();
+</script>
+</body>
+</html>
